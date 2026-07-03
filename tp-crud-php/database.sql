@@ -21,10 +21,10 @@ CREATE TABLE users (
 
 -- Insertion de données de test (27 utilisateurs)
 INSERT INTO users (nom, prenom, email, password, role) VALUES
-('Dupont', 'Jean', 'admin@example.com', '$2y$10$YourHashedPasswordHere1', 'admin'),
-('Martin', 'Marie', 'author@example.com', '$2y$10$YourHashedPasswordHere2', 'author'),
-('Bernard', 'Pierre', 'editor@example.com', '$2y$10$YourHashedPasswordHere3', 'editor'),
-('Durand', 'Luc', 'guest@example.com', '$2y$10$YourHashedPasswordHere4', 'guest'),
+('Dupont', 'Jean', 'admin@example.com', '$2y$10$ZCIaHR9DAeHxJtMDSIGzROV1GvbCWX4yf6rduETZeK3Bj/wlRByQW', 'admin'),
+('Martin', 'Marie', 'author@example.com', '$2y$10$1rKunl7bFmD1nVbX5ak7Se7qUe.Rns7UQOf2U2UKh5/oVORsbh8iy', 'author'),
+('Bernard', 'Pierre', 'editor@example.com', '$2y$10$94sRNctRQdr5GLfxH9Ogou6j0.83JgpVi.IvOQX0DQN1nWi.NBI.q', 'editor'),
+('Durand', 'Luc', 'guest@example.com', '$2y$10$8nFdJaiJyxTplwDaGnSp/u3WPpqVWFv6Ix0wPjHJxBHBPQW.s5SvW', 'guest'),
 ('Lefebvre', 'Sophie', 'sophie.lefebvre@example.com', '$2y$10$YourHashedPasswordHere5', 'author'),
 ('Leclerc', 'Paul', 'paul.leclerc@example.com', '$2y$10$YourHashedPasswordHere6', 'editor'),
 ('Moreau', 'Anne', 'anne.moreau@example.com', '$2y$10$YourHashedPasswordHere7', 'guest'),

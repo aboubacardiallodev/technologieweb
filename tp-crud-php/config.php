@@ -1,4 +1,8 @@
 <?php
+// Démarrer la session pour la gestion de l'authentification
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Configuration de la base de données
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'tp_crud_php');

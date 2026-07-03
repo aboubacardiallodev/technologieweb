@@ -1,6 +1,9 @@
 <?php
 require_once '../config.php';
 require_once 'includes/roles.php';
+require_once 'includes/auth.php';
+
+requireRole(['admin', 'editor', 'author', 'guest']);
 
 $user = null;
 $error = null;
@@ -100,12 +103,16 @@ include 'includes/header.php';
                             <i class="bi bi-arrow-left"></i> Retour
                         </a>
                         <div>
+                            <?php if (hasRole('admin') || hasRole('editor')): ?>
                             <a href="edit.php?id=<?php echo $user['id']; ?>" class="btn btn-warning">
                                 <i class="bi bi-pencil"></i> Modifier
                             </a>
+                            <?php endif; ?>
+                            <?php if (hasRole('admin')): ?>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-delete-url="delete.php?id=<?php echo $user['id']; ?>">
                                 <i class="bi bi-trash"></i> Supprimer
                             </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endif; ?>

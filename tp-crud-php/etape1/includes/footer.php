@@ -41,5 +41,15 @@
             });
         }
     </script>
+    <script>
+        // Select / Deselect all checkboxes
+        const selectAll = document.getElementById('selectAll');
+        if (selectAll) {
+            selectAll.addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('input[name="ids[]"]');
+                checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            });
+        }
+    </script>
 </body>
 </html>

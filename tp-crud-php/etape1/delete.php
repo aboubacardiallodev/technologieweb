@@ -1,5 +1,9 @@
 <?php
 require_once '../config.php';
+require_once 'includes/auth.php';
+
+// Seul admin peut supprimer
+requireRole(['admin']);
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 $error = null;
@@ -21,6 +25,14 @@ if ($id <= 0) {
             // Supprimer l'utilisateur
             $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
             $stmt->execute([$id]);
+            // Audit log
+            if (function_exists('currentUser')) {
+                if (file_exists(__DIR__ . '/includes/audit.php')) {
+                    require_once __DIR__ . '/includes/audit.php';
+                    $actor = $_SESSION['user']['id'] ?? null;
+                    try { logAudit($actor, 'delete_user', 'ID:' . $id); } catch (Throwable $e) {}
+                }
+            }
             $success = true;
         }
     } catch (PDOException $e) {

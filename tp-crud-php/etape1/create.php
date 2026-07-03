@@ -2,11 +2,19 @@
 require_once '../config.php';
 require_once 'includes/roles.php';
 require_once 'includes/validation.php';
+require_once 'includes/auth.php';
+require_once 'includes/csrf.php';
+
+// Seuls les admin et editor peuvent créer des utilisateurs
+requireRole(['admin','editor']);
 
 $errors = [];
 
 // Traiter le formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!verifyCsrfToken($_POST['csrf_token'] ?? '')) {
+        $errors[] = 'Jeton CSRF invalide.';
+    }
     // Validation des données de base
     $validationResult = validateUserFormData($_POST);
     $errors = $validationResult['errors'];
@@ -39,6 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $hashedPassword,
                 $userData['role']
             ]);
+                    // Audit log
+                    if (function_exists('currentUser')) {
+                        if (file_exists(__DIR__ . '/includes/audit.php')) {
+                            require_once __DIR__ . '/includes/audit.php';
+                            $actor = currentUser()['id'] ?? null;
+                            try { logAudit($actor, 'create_user', 'ID:' . $pdo->lastInsertId()); } catch (Throwable $e) {}
+                        }
+                    }
             
             // Redirection avec message de succès
             header('Location: index.php?success=Utilisateur créé avec succès');
@@ -79,6 +95,7 @@ include 'includes/header.php';
 
                 <!-- Formulaire de création -->
                 <form method="POST" class="needs-validation">
+                    <?php echo csrfInputField(); ?>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="prenom" class="form-label">Prénom <span class="text-danger">*</span></label>

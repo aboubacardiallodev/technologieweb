@@ -14,9 +14,20 @@
             <span class="navbar-brand mb-0 h1">
                 <i class="bi bi-database"></i> Gestion des Utilisateurs
             </span>
-            <a href="<?php echo $navbarLink ?? 'index.php'; ?>" class="btn btn-<?php echo $navbarButtonClass ?? 'secondary'; ?>">
-                <i class="bi bi-<?php echo $navbarIcon ?? 'arrow-left'; ?>"></i> <?php echo $navbarText ?? 'Retour'; ?>
-            </a>
+            <div>
+                <?php if (($showNavbarAction ?? true) === true): ?>
+                <a href="<?php echo $navbarLink ?? 'index.php'; ?>" class="btn btn-<?php echo $navbarButtonClass ?? 'secondary'; ?> me-2">
+                    <i class="bi bi-<?php echo $navbarIcon ?? 'arrow-left'; ?>"></i> <?php echo $navbarText ?? 'Retour'; ?>
+                </a>
+                <?php endif; ?>
+
+                <?php if (!empty($_SESSION['user'])): ?>
+                    <span class="text-light me-2">Connecté : <?php echo htmlspecialchars($_SESSION['user']['prenom'] . ' ' . $_SESSION['user']['nom']); ?> (<?php echo htmlspecialchars($_SESSION['user']['role']); ?>)</span>
+                    <a href="logout.php" class="btn btn-outline-light">Déconnexion</a>
+                <?php else: ?>
+                    <a href="login.php" class="btn btn-outline-light">Connexion</a>
+                <?php endif; ?>
+            </div>
         </div>
     </nav>
 
